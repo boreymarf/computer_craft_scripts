@@ -35,20 +35,6 @@ end
 -- The main cycle
 local function collect_cycle(name, redrouter)
 	while true do
-		redrouter.setOutput("right", true)
-		os.sleep(1)
-		redrouter.setOutput("right", false)
-
-		working_flowers = working_flowers + 1
-		stats.lava_buckets_used = stats.lava_buckets_used + 1
-		update_monitor()
-		save.save(stats, "stats.txt")
-		print("Redrouter", name, "poured lava")
-
-		os.sleep(FLOWER_WORK_TIME + 1)
-
-		working_flowers = working_flowers - 1
-		update_monitor()
 
 		local flower_output = redrouter.getAnalogInput("front")
 		local flower_cooldown = flower_output * COOLDOWN_MULTIPLIER
@@ -56,6 +42,22 @@ local function collect_cycle(name, redrouter)
 		print("Redrouter", name, "is on cooldown:", flower_cooldown, "s")
 
 		os.sleep(flower_cooldown + 1)
+		
+		redrouter.setOutput("right", true)
+		os.sleep(1)
+		redrouter.setOutput("right", false)
+		
+		working_flowers = working_flowers + 1
+		stats.lava_buckets_used = stats.lava_buckets_used + 1
+		update_monitor()
+		save.save(stats, "stats.txt")
+		print("Redrouter", name, "poured lava")
+		
+		os.sleep(FLOWER_WORK_TIME + 1)
+		
+		working_flowers = working_flowers - 1
+		update_monitor()
+		
 	end
 end
 

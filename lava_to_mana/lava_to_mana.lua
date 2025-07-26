@@ -91,4 +91,5 @@ for name, redrouter in pairs(redrouters) do
 end
 
 -- Start all tasks
+update_monitor()
 parallel.waitForAll(table.unpack(cycle_tasks))
